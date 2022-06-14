@@ -4,4 +4,4 @@ Simple bot that scrapes the review and ratings data of app specified on Google P
 - You must have the selenium driver for google chrome installed
 - You have to include the path of the driver on your local machibe
 - You have to enter the app name in the space provided in the script.
-Hit run and watch the scraper do its magic then save the app data as csv with the 'app name'.csv
+### Hit run and watch the scraper do its magic then save the app data as csv with the 'app name'.csv
