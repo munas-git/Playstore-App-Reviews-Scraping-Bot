@@ -3,14 +3,14 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import re
 import pandas as pd
-PATH = 'C:\Program Files (x86)\chromedriver.exe'
+PATH = 'C:\Program Files (x86)\chromedriver.exe' # Edit driver location if your driver isn't stored here.
 import warnings
 warnings.filterwarnings('ignore')
 
 
 ##############################################
 # ENTER THE APP NAME BETWEEN "" BEFORE RUNNING 
-app_name = "stick war legacy"
+app_name = ""
 ##############################################
 
 
