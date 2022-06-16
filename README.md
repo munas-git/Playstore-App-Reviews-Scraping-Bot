@@ -13,4 +13,4 @@ Simple bot that scrapes the review and ratings data of app specified on Google P
 
 ---
 
-## This bot was not built to break any laws of any sort. I built it to scrap data for my Call of Duty Mobile ML/NLP project. It can and will be used to hather app reviews for other projects.
+## This bot was not built to break any laws of any sort. I built it to scrap data for my Call of Duty Mobile ML/NLP project. It can and will be used to scrape app reviews for other projects.
