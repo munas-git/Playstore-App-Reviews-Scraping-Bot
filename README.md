@@ -10,5 +10,5 @@ Simple bot that scrapes the review and ratings data of app specified on Google P
 ### You should ignore any error messages like "DevTools listening on...."
 - "dns_config_service_win.cc(509)] Failed to read DnsConfig." Simply means your system is not connected to the internet.
 - In situation where the script fails to load completely, it means the wait time was too short and page content did not fully load. To solve this, simply increase wait time in "time.sleep(_)". Adjust the time in seconds to your desired time.
-<br></br>
+<br />
 ## This bot was not built to break any laws of any sort. I built it to scrap data for my Call of Duty Mobile ML/NLP project. It can and will be used to hather app reviews for other projects.
