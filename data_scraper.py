@@ -2,6 +2,7 @@ import re
 import time
 import warnings
 import pandas as pd
+from tqdm import tqdm
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
@@ -11,16 +12,16 @@ PATH = 'C:\Program Files (x86)\chromedriver.exe'
 warnings.filterwarnings('ignore')
 
 
-########################################################
+#########################################################
 # ENTER THE APP NAME BETWEEN "" BEFORE RUNNING
 app_name = "roblox"
 num_of_calls = 150 # Number of times the JS function to 
-# return reviews is called. Default of 150, provides
-# about 3,400 to 3,800 rolls of data.
+# return more reviews is called. Default of 150, provides
+# about 3,400 to 3,800 rows of data.
 # Adjust accordingly to scrape more/less data.
 # Scraper will take up to 10 minutes to gather such data
 # With default number of calls.
-########################################################
+#########################################################
 
 
 
@@ -73,7 +74,7 @@ def navigate_app():
     time.sleep(2)
     # Hits tab key 3 times to shift to game link
     # Then clicks on link to get to main page
-    search_box.send_keys(Keys.TAB, Keys.TAB, Keys.TAB, Keys.ENTER)
+    search_box.send_keys(Keys.TAB*3, Keys.ENTER)
     open_all_reviews()
 
 
@@ -88,10 +89,10 @@ def open_all_reviews():
     # Locates the close reviews button
     review_scroll = driver.find_element_by_class_name("VfPpkd-Bz112c-LgbsSe.yHy1rc.eT1oJ.DiOXab.a8Z62d")
     # Just some friendly user message
-    print("Hang in there....")
+    print("Fetching data, hang in there....")
     # For loop to scroll down and trigger the JS Function to feed app reviews data
     time.sleep(2)
-    for i in range(num_of_calls):
+    for i in tqdm(range(num_of_calls)):
         review_scroll.send_keys(Keys.TAB, Keys.END*2)
         time.sleep(0.01)
     collect_reviews()
