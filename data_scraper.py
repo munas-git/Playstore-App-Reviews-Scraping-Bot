@@ -15,7 +15,7 @@ warnings.filterwarnings('ignore')
 #########################################################
 # ENTER THE APP NAME BETWEEN "" BEFORE RUNNING
 app_name = "roblox"
-num_of_calls = 150 # Number of times the JS function to 
+num_of_calls = 15#0 # Number of times the JS function to 
 # return more reviews is called. Default of 150, provides
 # about 3,400 to 3,800 rows of data.
 # Adjust accordingly to scrape more/less data.
