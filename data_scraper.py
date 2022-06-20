@@ -7,7 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
 
-# Path should be adjusted if your drivers appropriate location.
+# Path should be adjusted to your drivers appropriate location.
 PATH = 'C:\Program Files (x86)\chromedriver.exe'
 warnings.filterwarnings('ignore')
 
@@ -15,7 +15,7 @@ warnings.filterwarnings('ignore')
 #########################################################
 # ENTER THE APP NAME BETWEEN "" BEFORE RUNNING
 app_name = "roblox"
-num_of_calls = 15#0 # Number of times the JS function to 
+num_of_calls = 150 # Number of times the JS function to 
 # return more reviews is called. Default of 150, provides
 # about 3,400 to 3,800 rows of data.
 # Adjust accordingly to scrape more/less data.
@@ -72,8 +72,8 @@ def navigate_app():
     time.sleep(1)
     search_box.send_keys(Keys.ENTER) # Clicks enter for search box
     time.sleep(2)
-    # Hits tab key 3 times to shift to game link
-    # Then clicks on link to get to main page
+    # Hits tab key 3 times to shift to app link
+    # Then clicks on link to get to app home page
     search_box.send_keys(Keys.TAB*3, Keys.ENTER)
     open_all_reviews()
 
@@ -83,7 +83,7 @@ def open_all_reviews():
     time.sleep(3)
     # Searches for all buttons
     # Then clicks on the second to the last one
-    # button[-2] == See all reviews
+    # buttons[-2] == See all reviews
     buttons = driver.find_elements_by_tag_name("button")
     buttons[-2].click()
     # Locates the close reviews button
@@ -109,7 +109,7 @@ def collect_reviews():
     star_ratings = driver.find_elements_by_class_name("iXRFPc") # Locates ratings
     time.sleep(1)
     for (review,rating) in zip(reviews, star_ratings):
-        review = review.text # Extracts test from the reviews
+        review = review.text # Extracts reviews
         star_rating = rating.get_attribute("aria-label") # Extracts the strings from "aria-label" attribute
         star_rating = re.findall("\d", star_rating) # Extracts the integer rating as list
         star_rating = star_rating[0] # Removes rating from list
@@ -125,7 +125,7 @@ def collect_reviews():
 
 def save_review_dataframe():
     """
-    Saves dataframe in CSV format file.
+    Saves dataframe in CSV file format.
     """
     # Just some friendly user message
     print("Storing data, almost done....")
