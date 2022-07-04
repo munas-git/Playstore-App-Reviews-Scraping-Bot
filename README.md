@@ -8,9 +8,9 @@ Simple bot that scrapes the review and ratings data of app specified on Google P
 - You can adjust the "number of calls". This tells the script how many times to trigger the JS data loading function. More loads = More data and longer process time.
 
 ### Hit run and watch the scraper do its magic. It also saves the app reviews in csv format as 'app name_reviews'.csv
-### You should ignore any error messages like "DevTools listening on...."
+## Before running the bot, read these.
+- You should ignore any error messages like "DevTools listening on...."
 - "dns_config_service_win.cc(509)] Failed to read DnsConfig." Simply means your system is not connected to the internet.
-- In situation where the script fails to load completely, it means the wait time was too short and page content did not fully load. To solve this, simply increase wait time in "time.sleep(_)". Adjust the time in seconds to your desired time.
 - In an event where the bot crashes after you receive the "Exercise patience as this may take up to 10 minutes or more." message, it means you have a slow network and need to adjust the WAIT_TIME to suit network speed.
 
 ---
