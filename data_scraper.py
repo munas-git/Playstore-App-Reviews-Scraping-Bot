@@ -12,16 +12,17 @@ PATH = 'C:\Program Files (x86)\chromedriver.exe'
 warnings.filterwarnings('ignore')
 
 
-#########################################################
+##################################################################
 # ENTER THE APP NAME BETWEEN "" BEFORE RUNNING
-app_name = "roblox"
-num_of_calls = 150 # Number of times the JS function to 
+WAIT_TIME = 5 # Default wait time(Seconds) before each bot action.
+app_name = "Call of Duty"
+num_of_calls = 300 # Number of times the JS function to 
 # return more reviews is called. Default of 150, provides
 # about 3,400 to 3,800 rows of data.
 # Adjust accordingly to scrape more/less data.
 # Scraper will take up to 10 minutes to gather such data
 # With default number of calls.
-#########################################################
+##################################################################
 
 
 
@@ -69,9 +70,9 @@ def navigate_app():
     search_box = driver.find_element_by_class_name("HWAcU")
     search_box.clear() # Clear search box
     enter_game_name = search_box.send_keys(app_name.lower())
-    time.sleep(1)
+    time.sleep(WAIT_TIME)
     search_box.send_keys(Keys.ENTER) # Clicks enter for search box
-    time.sleep(2)
+    time.sleep(WAIT_TIME)
     # Hits tab key 3 times to shift to app link
     # Then clicks on link to get to app home page
     search_box.send_keys(Keys.TAB*3, Keys.ENTER)
@@ -80,7 +81,7 @@ def navigate_app():
 
 def open_all_reviews():
     """This function navigates to the 'See all reviews link and clicks it'"""
-    time.sleep(3)
+    time.sleep(WAIT_TIME)
     # Searches for all buttons
     # Then clicks on the second to the last one
     # buttons[-2] == See all reviews
@@ -91,10 +92,10 @@ def open_all_reviews():
     # Just some friendly user message
     print("Fetching data, hang in there....")
     # For loop to scroll down and trigger the JS Function to feed app reviews data
-    time.sleep(2)
+    time.sleep(WAIT_TIME)
     for i in tqdm(range(num_of_calls)):
         review_scroll.send_keys(Keys.TAB, Keys.END*2)
-        time.sleep(0.01)
+        # time.sleep(5) #### CHECK HERE INCASE.
     collect_reviews()
 
 
@@ -102,12 +103,12 @@ def collect_reviews():
     """
     This function gatheres all the data and stores them inside a dictionary
     """
-    time.sleep(1)
+    time.sleep(WAIT_TIME)
     # Just some friendly user message
     print("Currently organizing data....")
     reviews = driver.find_elements_by_class_name("h3YV2d") # Locates reviews
     star_ratings = driver.find_elements_by_class_name("iXRFPc") # Locates ratings
-    time.sleep(1)
+    time.sleep(WAIT_TIME)
     for (review,rating) in zip(reviews, star_ratings):
         review = review.text # Extracts reviews
         star_rating = rating.get_attribute("aria-label") # Extracts the strings from "aria-label" attribute
@@ -131,7 +132,7 @@ def save_review_dataframe():
     print("Storing data, almost done....")
     reviews_ratings_df = pd.DataFrame(app_reviews_ratings)
     reviews_ratings_df = reviews_ratings_df.iloc[1: ,]
-    time.sleep(1)
+    time.sleep(2)
     save_to = f"{app_name.title()}_reviews.csv"
     reviews_ratings_df.to_csv(save_to, index=False)
     driver.quit() # Closes driver window and ends driver session
