@@ -14,3 +14,5 @@ Simple bot that scrapes the review and ratings data of app specified on Google P
 - It saves the app reviews in csv format as 'app name_reviews'.csv
 
 ## This bot was not built to break any laws of any sort. I built it to scrap data for my Call of Duty Mobile ML/NLP project. It can and will be used to scrape app reviews for other projects.
+## Demo video of bot in action:
+https://user-images.githubusercontent.com/78413685/187031262-d91dacd3-7c1c-49e1-a336-5b6bf4b6a6cf.mp4
