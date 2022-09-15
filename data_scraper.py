@@ -4,17 +4,18 @@ import warnings
 import pandas as pd
 from tqdm import tqdm
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-
-
-# Path should be adjusted to your drivers appropriate location.
-PATH = 'C:\Program Files (x86)\chromedriver.exe'
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 warnings.filterwarnings('ignore')
+
 
 
 ##################################################################
 # ENTER THE APP NAME BETWEEN "" BEFORE RUNNING
-WAIT_TIME = 5 # Default wait time(Seconds) before each bot action.
+
+WAIT_TIME = 4 # Default wait time(Seconds) before each bot action.
 app_name = "Call of Duty"
 num_of_calls = 300 # Number of times the JS function to 
 # return more reviews is called. Default of 150, provides
@@ -28,11 +29,11 @@ num_of_calls = 300 # Number of times the JS function to
 
 
 # url to google playstore games page
-url = 'https://play.google.com/store/games'
+URL = 'https://play.google.com/store/games'
 
 # Windowless mode feature (Chrome) and error message handling.
 options = webdriver.ChromeOptions()
-options.headless = True
+# options.headless = True
 options.add_argument("--window-size=1920,1080")
 options.add_argument('--ignore-certificate-errors')
 options.add_argument('--allow-running-insecure-content')
@@ -46,8 +47,8 @@ options.add_argument('--no-sandbox')
 
 
 # Initialization of web driver
-driver = webdriver.Chrome(PATH, options=options)
-driver.get(url)
+driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+driver.get(URL)
 
 
 reviews_list = []
@@ -64,12 +65,13 @@ def navigate_app():
     print("Scraping data....")
     print("Exercise patience as this may take up to 10 minutes or more.")
     # Finds the search icon by ID and clicks on it
-    search_icon = driver.find_element_by_class_name("google-material-icons.r9optf")
+    search_icon = driver.find_element(by= By.CLASS_NAME, value="google-material-icons.r9optf")
     search_icon.click()
-    # Enter game name into search bar and hits enter
-    search_box = driver.find_element_by_class_name("HWAcU")
+    # Enter app name into search bar and hits enter
+    search_box = driver.find_element(by= By.CLASS_NAME, value="HWAcU")
     search_box.clear() # Clear search box
-    enter_game_name = search_box.send_keys(app_name.lower())
+    # Deleted enter game name; enter_game_name = search_box.send_keys(app_name.lower())
+    search_box.send_keys(app_name.lower())
     time.sleep(WAIT_TIME)
     search_box.send_keys(Keys.ENTER) # Clicks enter for search box
     time.sleep(WAIT_TIME)
@@ -80,15 +82,15 @@ def navigate_app():
 
 
 def open_all_reviews():
-    """This function navigates to the 'See all reviews link and clicks it'"""
+    """This function navigates to the 'See all reviews' link and clicks it"""
     time.sleep(WAIT_TIME)
     # Searches for all buttons
     # Then clicks on the second to the last one
-    # buttons[-2] == See all reviews
-    buttons = driver.find_elements_by_tag_name("button")
-    buttons[-2].click()
+    # buttons[-2] == 'See all reviews'
+    buttons = driver.find_elements(by= By.TAG_NAME, value="button")
+    buttons[-2].click() # Clicks on 'See all reviews' link
     # Locates the close reviews button
-    review_scroll = driver.find_element_by_class_name("VfPpkd-Bz112c-LgbsSe.yHy1rc.eT1oJ.DiOXab.a8Z62d")
+    review_scroll = driver.find_element(by= By.CLASS_NAME, value="VfPpkd-Bz112c-LgbsSe.yHy1rc.eT1oJ.mN1ivc.a8Z62d")
     # Just some friendly user message
     print("Fetching data, hang in there....")
     # For loop to scroll down and trigger the JS Function to feed app reviews data
@@ -106,8 +108,8 @@ def collect_reviews():
     time.sleep(WAIT_TIME)
     # Just some friendly user message
     print("Currently organizing data....")
-    reviews = driver.find_elements_by_class_name("h3YV2d") # Locates reviews
-    star_ratings = driver.find_elements_by_class_name("iXRFPc") # Locates ratings
+    reviews = driver.find_elements(by= By.CLASS_NAME, value="h3YV2d") # Locates reviews
+    star_ratings = driver.find_elements(by= By.CLASS_NAME, value="iXRFPc") # Locates ratings
     time.sleep(WAIT_TIME)
     for (review,rating) in zip(reviews, star_ratings):
         review = review.text # Extracts reviews
@@ -139,4 +141,4 @@ def save_review_dataframe():
     print(f"Data saved as {app_name.title()}_reviews.csv in current directory.")
 
 
-navigate_app()
+# navigate_app()
