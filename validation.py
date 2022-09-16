@@ -33,7 +33,7 @@ def data_collection(name:str, calls:int) ->tuple:
     try:
         print("                              -***-")
         calls = int(calls) # Tries to convert number of calls into integer.
-        if name.strip() != "" and 10 <= calls <=700: # Checks if name and number meet requirement.
+        if name.strip() != "" and 100 <= calls <=700: # Checks if name and number meet requirement.
             return(name, calls)
         else:
             print("Ensure name field isn't empty and number of calls is between 100 and 700, both inclusive.")
