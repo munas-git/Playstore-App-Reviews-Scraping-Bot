@@ -3,7 +3,7 @@ Simple bot that scrapes the review and ratings data of app specified on Google P
 #### Before attempting to scrape data
 - You should have the reqiuired libraries
 - You should watch the demo video below.
-- Read instructions displayed upon running of "data_scraper.py" script
+- Read instructions displayed upon running of **"data_scraper.py"** script
 
 ## Other things to note.
 - When data is fully scraped, it is saved in the format 'app name_reviews.csv' in the downloads folder. 
