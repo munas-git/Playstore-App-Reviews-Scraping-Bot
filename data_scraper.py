@@ -9,6 +9,70 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 warnings.filterwarnings('ignore')
+from run_me import *
+
+
+
+
+########################################
+# print("###################################################################################")
+# print("Welcome to Playstore App Reviews Data Scraper \n")
+# print("Things To Note")
+# print("- App name can not be empty and must appear as it does in playstore")
+# print("- Number of calls must be integer between 100 to 700, both inclusive.")
+# print("- Minimum number of calls (100) provides an average of 2,000 rows of data, adjust accordingly.")
+# print("   **And finally, ensure you have steady network connection.**")
+# time.sleep(2)
+
+
+# print("                              -***-")
+# name = input("Enter name here: ")
+# calls = input("Enter calls here: ")
+
+
+# def data_collection(name:str, calls:int) ->tuple:
+#     """
+#     Function collects and validates user inputs.
+
+#     Input:
+#         name:str: Name of app whose data is to be scraped. App must be available on the app store and spelt correctly.
+
+#         calls:int: Integer value between 100 and 700 that determines amount of data that will be scraped.
+
+
+#     Output:
+#         (name, calls): Tuple containig validated app name and amount of calls.
+#     """
+
+#     try:
+#         print("                              -***-")
+#         calls = int(calls) # Tries to convert number of calls into integer.
+#         if name.strip() != "" and 100 <= calls <=700: # Checks if name and number meet requirement.
+#             return(name, calls)
+#         else:
+#             print("Ensure name field isn't empty and number of calls is between 100 and 700, both inclusive.")
+#             name = input("Enter app name here: ")
+#             calls = input("Enter number of calls here: ")
+#             info = data_collection(name, calls)
+#             name, calls = info[0], info[1]
+#             return(name, calls)
+#     except ValueError:
+#         print("You have entered an invalid literal for int(). Enter a valid number NB: Integer between 100 and 700")
+#         name_n = input("Enter app name here: ")
+#         calls_n = input("Enter number of calls here: ")
+#         info = data_collection(name_n, calls_n)
+#         name, calls = info[0], info[1]
+#         return(name, calls)
+
+
+# info = data_collection(name, calls)
+# name, calls = info[0], info[1]
+# print("###################################################################################")
+########################################
+
+
+
+
 
 
 
@@ -16,8 +80,8 @@ warnings.filterwarnings('ignore')
 # ENTER THE APP NAME BETWEEN "" BEFORE RUNNING
 
 WAIT_TIME = 4 # Default wait time(Seconds) before each bot action.
-app_name = "Call of Duty"
-num_of_calls = 300 # Number of times the JS function to 
+app_name =  name #"Call of Duty"
+num_of_calls = calls #300 # Number of times the JS function to 
 # return more reviews is called. Default of 150, provides
 # about 3,400 to 3,800 rows of data.
 # Adjust accordingly to scrape more/less data.
@@ -33,17 +97,18 @@ URL = 'https://play.google.com/store/games'
 
 # Windowless mode feature (Chrome) and error message handling.
 options = webdriver.ChromeOptions()
-# options.headless = True
+options.headless = True
 options.add_argument("--window-size=1920,1080")
-options.add_argument('--ignore-certificate-errors')
-options.add_argument('--allow-running-insecure-content')
+options.add_argument("--ignore-certificate-errors")
+options.add_argument("--allow-running-insecure-content")
 options.add_argument("--disable-extensions")
 options.add_argument("--proxy-server='direct://'")
 options.add_argument("--proxy-bypass-list=*")
 options.add_argument("--start-maximized")
-options.add_argument('--disable-gpu')
-options.add_argument('--disable-dev-shm-usage')
-options.add_argument('--no-sandbox')
+options.add_argument("--disable-gpu")
+options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--no-sandbox")
+options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
 
 # Initialization of web driver
@@ -108,6 +173,8 @@ def collect_reviews():
     time.sleep(WAIT_TIME)
     # Just some friendly user message
     print("Currently organizing data....")
+    time.sleep(1)
+    print("This may take some time, based on the amount of data you're scraping.... hang in there a bit.")
     reviews = driver.find_elements(by= By.CLASS_NAME, value="h3YV2d") # Locates reviews
     star_ratings = driver.find_elements(by= By.CLASS_NAME, value="iXRFPc") # Locates ratings
     time.sleep(WAIT_TIME)
@@ -123,6 +190,7 @@ def collect_reviews():
     # Creates dictionary and adds list of reviews and ratings
     app_reviews_ratings["reviews"] = reviews_list
     app_reviews_ratings["ratings"] = ratings_list
+    driver.quit() # Closes driver window and ends driver session
     save_review_dataframe()
 
 
@@ -137,8 +205,7 @@ def save_review_dataframe():
     time.sleep(2)
     save_to = f"{app_name.title()}_reviews.csv"
     reviews_ratings_df.to_csv(save_to, index=False)
-    driver.quit() # Closes driver window and ends driver session
     print(f"Data saved as {app_name.title()}_reviews.csv in current directory.")
 
 
-# navigate_app()
+navigate_app()
