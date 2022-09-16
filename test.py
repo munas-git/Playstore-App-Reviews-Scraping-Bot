@@ -1,40 +1,31 @@
-name = input("Enter name here: ")
-calls = input("Enter calls here: ")
+from operator import index
+import os
+
+app = 'call of dudes'
+USER = os.getlogin()
+FULL_PATH = fr"C:\Users\{USER}\Downloads\{app.title()}.csv"
+
+# completeName = os.path.join(save_path, file_name)
 
 
-def data_collection(name:str, calls:int) ->tuple:
-    """
-    Function collects and validates user inputs.
 
-    Input:
-        name:str: Name of app whose data is to be scraped. App must be available on the app store and spelt correctly.
-
-        calls:int: Integer value between 100 and 700 that determines amount of data that will be scraped.
+var = "hey man, I am goodddd!!!"
 
 
-    Output:
-        (name, calls): Tuple containig validated app name and amount of calls.
-    """
-
-    try:
-        calls = int(calls) # Tries to convert number of calls into integer.
-        if name.strip() != "" and 100 <= calls <=700: # Checks if name and number meet requirement.
-            return(name, calls)
-        else:
-            print("Ensure name field isn't empty and number of calls is between 100 and 700, both inclusive.")
-            name = input("Enter app name here: ")
-            calls = input("Enter number of calls here: ")
-            info = data_collection(name, calls)
-            name, calls = info[0], info[1]
-            return(name, calls)
-    except ValueError:
-        print("You have entered an invalid literal for int(). Enter a valid number NB: Integer between 100 and 700")
-        name_n = input("Enter app name here: ")
-        calls_n = input("Enter number of calls here: ")
-        info = data_collection(name_n, calls_n)
-        name, calls = info[0], info[1]
-        return(name, calls)
+# path = 
+# with open(r"C:\Users\samsung\Downloads\rands.csv", 'w') as file:
+#     file.write(var)
 
 
-info = data_collection(name, calls)
-name, calls = info[0], info[1]
+import pandas as pd
+
+
+df = pd.DataFrame(
+    {
+    'a':[1,2,3,4,5],
+    'b':[5,4,3,2,1]
+   }
+)
+
+
+df.to_csv(FULL_PATH, index=False)

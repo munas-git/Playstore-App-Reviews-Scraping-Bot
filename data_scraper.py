@@ -1,95 +1,24 @@
+import os
 import re
-import time
 import warnings
 import pandas as pd
 from tqdm import tqdm
+from validation import *
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 warnings.filterwarnings('ignore')
-from run_me import *
-
-
-
-
-########################################
-# print("###################################################################################")
-# print("Welcome to Playstore App Reviews Data Scraper \n")
-# print("Things To Note")
-# print("- App name can not be empty and must appear as it does in playstore")
-# print("- Number of calls must be integer between 100 to 700, both inclusive.")
-# print("- Minimum number of calls (100) provides an average of 2,000 rows of data, adjust accordingly.")
-# print("   **And finally, ensure you have steady network connection.**")
-# time.sleep(2)
-
-
-# print("                              -***-")
-# name = input("Enter name here: ")
-# calls = input("Enter calls here: ")
-
-
-# def data_collection(name:str, calls:int) ->tuple:
-#     """
-#     Function collects and validates user inputs.
-
-#     Input:
-#         name:str: Name of app whose data is to be scraped. App must be available on the app store and spelt correctly.
-
-#         calls:int: Integer value between 100 and 700 that determines amount of data that will be scraped.
-
-
-#     Output:
-#         (name, calls): Tuple containig validated app name and amount of calls.
-#     """
-
-#     try:
-#         print("                              -***-")
-#         calls = int(calls) # Tries to convert number of calls into integer.
-#         if name.strip() != "" and 100 <= calls <=700: # Checks if name and number meet requirement.
-#             return(name, calls)
-#         else:
-#             print("Ensure name field isn't empty and number of calls is between 100 and 700, both inclusive.")
-#             name = input("Enter app name here: ")
-#             calls = input("Enter number of calls here: ")
-#             info = data_collection(name, calls)
-#             name, calls = info[0], info[1]
-#             return(name, calls)
-#     except ValueError:
-#         print("You have entered an invalid literal for int(). Enter a valid number NB: Integer between 100 and 700")
-#         name_n = input("Enter app name here: ")
-#         calls_n = input("Enter number of calls here: ")
-#         info = data_collection(name_n, calls_n)
-#         name, calls = info[0], info[1]
-#         return(name, calls)
-
-
-# info = data_collection(name, calls)
-# name, calls = info[0], info[1]
-# print("###################################################################################")
-########################################
-
-
-
-
-
 
 
 ##################################################################
-# ENTER THE APP NAME BETWEEN "" BEFORE RUNNING
-
 WAIT_TIME = 4 # Default wait time(Seconds) before each bot action.
-app_name =  name #"Call of Duty"
-num_of_calls = calls #300 # Number of times the JS function to 
-# return more reviews is called. Default of 150, provides
-# about 3,400 to 3,800 rows of data.
-# Adjust accordingly to scrape more/less data.
-# Scraper will take up to 10 minutes to gather such data
-# With default number of calls.
+APP_NAME =  name # From validated input in validation.py
+NUM_OF_CALL = calls # From validated input in validation.py
+USER = os.getlogin() # Getting active user name.
+FULL_PATH = fr"C:\Users\{USER}\Downloads\{APP_NAME.title()}.csv"
 ##################################################################
-
-
 
 
 # url to google playstore games page
@@ -97,17 +26,7 @@ URL = 'https://play.google.com/store/games'
 
 # Windowless mode feature (Chrome) and error message handling.
 options = webdriver.ChromeOptions()
-options.headless = True
-options.add_argument("--window-size=1920,1080")
-options.add_argument("--ignore-certificate-errors")
-options.add_argument("--allow-running-insecure-content")
-options.add_argument("--disable-extensions")
-options.add_argument("--proxy-server='direct://'")
-options.add_argument("--proxy-bypass-list=*")
-options.add_argument("--start-maximized")
-options.add_argument("--disable-gpu")
-options.add_argument("--disable-dev-shm-usage")
-options.add_argument("--no-sandbox")
+options.headless = True # Runs driver without opening a chrome browser.
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
 
@@ -136,7 +55,7 @@ def navigate_app():
     search_box = driver.find_element(by= By.CLASS_NAME, value="HWAcU")
     search_box.clear() # Clear search box
     # Deleted enter game name; enter_game_name = search_box.send_keys(app_name.lower())
-    search_box.send_keys(app_name.lower())
+    search_box.send_keys(APP_NAME.lower())
     time.sleep(WAIT_TIME)
     search_box.send_keys(Keys.ENTER) # Clicks enter for search box
     time.sleep(WAIT_TIME)
@@ -160,7 +79,7 @@ def open_all_reviews():
     print("Fetching data, hang in there....")
     # For loop to scroll down and trigger the JS Function to feed app reviews data
     time.sleep(WAIT_TIME)
-    for i in tqdm(range(num_of_calls)):
+    for i in tqdm(range(NUM_OF_CALL)):
         review_scroll.send_keys(Keys.TAB, Keys.END*2)
         # time.sleep(5) #### CHECK HERE INCASE.
     collect_reviews()
@@ -203,9 +122,11 @@ def save_review_dataframe():
     reviews_ratings_df = pd.DataFrame(app_reviews_ratings)
     reviews_ratings_df = reviews_ratings_df.iloc[1: ,]
     time.sleep(2)
-    save_to = f"{app_name.title()}_reviews.csv"
-    reviews_ratings_df.to_csv(save_to, index=False)
-    print(f"Data saved as {app_name.title()}_reviews.csv in current directory.")
+    # Convert to CSV and save in Downloads.
+    reviews_ratings_df.to_csv(FULL_PATH, index=False)
+    print(f"Data saved as {APP_NAME.title()}_reviews.csv in Downloads.")
+    print("See you again next time ;-)")
 
 
-navigate_app()
+if __name__ == "__main__":
+    navigate_app()
