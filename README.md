@@ -1,4 +1,5 @@
-# Playstore-App-Reviews-Scraping-Bot
+##### Project Status: Complete.
+# Project Title: Playstore-App-Reviews-Scraping-Bot
 Simple bot that scrapes the review and ratings data of app specified on Google Play Store.
 #### Before attempting to scrape data, take note of the following:
 - You should have the reqiuired libraries.
