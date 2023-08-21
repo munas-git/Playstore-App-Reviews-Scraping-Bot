@@ -4,21 +4,24 @@ import warnings
 import pandas as pd
 from tqdm import tqdm
 from validation import *
+from colorama import Fore
 from selenium import webdriver
+from colorama import init as colorama_init
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service as ChromeService
 warnings.filterwarnings('ignore')
+colorama_init()
 
 
-##################################################################
+########################################################################
 WAIT_TIME = 4 # Default wait time(Seconds) before each bot action.
 APP_NAME =  name # From validated input in validation.py
 NUM_OF_CALL = calls # From validated input in validation.py
 USER = os.getlogin() # Getting active user name.
 FULL_PATH = fr"C:\Users\{USER}\Downloads\{APP_NAME.title()}_reviews.csv"
-##################################################################
+########################################################################
 
 
 # url to google playstore games page
@@ -124,7 +127,8 @@ def save_review_dataframe():
     time.sleep(2)
     # Convert to CSV and save in Downloads.
     reviews_ratings_df.to_csv(FULL_PATH, index=False)
-    print(f"Data saved as {APP_NAME.title()}_reviews.csv in Downloads.")
+    data_rows = "{:,}".format(reviews_ratings_df.shape[0])
+    print("\n"f"{Fore.LIGHTGREEN_EX}{data_rows} rows of data have been saved to downloadas as {APP_NAME.title()}_reviews.csv.")
     print("See you again next time ;-)")
 
 
