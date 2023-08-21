@@ -13,7 +13,7 @@ time.sleep(2)
 
 print("                              -***-")
 name = input("Enter app name here: ")
-calls = input("How many calls should be made calls?: ")
+calls = input("How many calls should be made?: ")
 
 
 def data_collection(name:str, calls:int) ->tuple:
