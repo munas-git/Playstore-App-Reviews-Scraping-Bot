@@ -7,8 +7,8 @@ from validation import *
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.service import Service as ChromeService
 warnings.filterwarnings('ignore')
 
 
@@ -24,14 +24,14 @@ FULL_PATH = fr"C:\Users\{USER}\Downloads\{APP_NAME.title()}.csv"
 # url to google playstore games page
 URL = 'https://play.google.com/store/games'
 
-# Windowless mode feature (Chrome) and error message handling.
+# Windowless mode feature (Chrome) and chrome message handling.
 options = webdriver.ChromeOptions()
 options.headless = True # Runs driver without opening a chrome browser.
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 
 
 # Initialization of web driver
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options = options)
 driver.get(URL)
 
 
