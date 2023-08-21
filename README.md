@@ -8,7 +8,7 @@ A simple bot that scrapes the review and ratings data of any app on Google Play 
 - The scraper typically takes about 3 minutes to scrape 2,200+ rows of data.
 
 ## Other things to note:
-- When data is fully scraped, it is saved in the format 'app name.csv' in the downloads folder. 
+- When data is fully scraped, it is saved in the format 'app name_reviews.csv' in the downloads folder. 
 
 ## This bot was not built to break any laws of any sort. I built it for educational purposes and to scrap data for a project in this same user profile; Call of Duty Mobile ML/NLP project. It can and will be used to scrape app reviews for other projects.
 ## Demo video of bot in action:

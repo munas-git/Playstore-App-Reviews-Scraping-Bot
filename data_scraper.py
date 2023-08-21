@@ -17,7 +17,7 @@ WAIT_TIME = 4 # Default wait time(Seconds) before each bot action.
 APP_NAME =  name # From validated input in validation.py
 NUM_OF_CALL = calls # From validated input in validation.py
 USER = os.getlogin() # Getting active user name.
-FULL_PATH = fr"C:\Users\{USER}\Downloads\{APP_NAME.title()}.csv"
+FULL_PATH = fr"C:\Users\{USER}\Downloads\{APP_NAME.title()}_reviews.csv"
 ##################################################################
 
 
